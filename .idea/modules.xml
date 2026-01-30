@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EWallet.iml" filepath="$PROJECT_DIR$/EWallet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TransactionService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/TransactionService.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TransactionService.test.iml" filepath="$PROJECT_DIR$/.idea/modules/TransactionService.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UserService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/UserService.main.iml" />
+    </modules>
+  </component>
+</project>
