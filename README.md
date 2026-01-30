@@ -3,48 +3,25 @@
 real-world event-driven microservices system built using Spring Boot, Apache Kafka (KRaft mode), MySQL, and Spring Security.
 
 The system demonstrates asynchronous communication, service decoupling, and event choreography using Kafka.
-
-Architecture Overview
-
-This system follows an event-driven microservices architecture using Kafka as the messaging backbone.
-
-Flow:
-
+# Architecture Overview
 UserService
-
-Creates users
-
-Publishes user_created events
+   │
+   └──▶ Kafka (user_created)
+             ├──▶ WalletService
+             ├──▶ NotificationService
+             └──▶ TransactionService
 
 TransactionService
-
-Initiates transactions
-
-Publishes transaction_initiated events
-
-Consumes transaction_updated events to update transaction status asynchronously
-
-Kafka
-
-Acts as the central event broker
-
-Decouples producers and consumers
+   │
+   └──▶ Kafka (transaction_initiated)
+             ├──▶ WalletService
+             └──▶ NotificationService
 
 WalletService
+   │
+   └──▶ Kafka (transaction_updated)
+             └──▶ TransactionService
 
-Consumes user_created events to initialize wallets
-
-Consumes transaction_initiated events to process balances
-
-Publishes transaction_updated events after processing
-
-NotificationService
-
-Consumes user_created and transaction_initiated events
-
-Sends notifications independently
-
-This design ensures loose coupling, scalability, and asynchronous consistency across services.
     
  Tech Stack
 
