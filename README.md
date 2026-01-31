@@ -1,4 +1,4 @@
-Event-Driven Microservices with Kafka
+# Event-Driven Microservices with Kafka
 
 A real-world event-driven microservices system built using Spring Boot, Apache Kafka (KRaft mode), MySQL, and Spring Security.
 
@@ -10,7 +10,7 @@ Loose coupling between services
 
 Event choreography using Kafka
 
-Architecture Overview
+# Architecture Overview
 UserService
    │
    └──▶ Kafka (user_created)
@@ -31,7 +31,7 @@ WalletService
    └──▶ Kafka (transaction_updated)
              └──▶ TransactionService
 
-Tech Stack
+# Tech Stack
 
 Java 21
 
@@ -49,7 +49,7 @@ Gradle
 
 Postman
 
-Microservices
+# Microservices
 UserService
 
 Role: Producer
@@ -64,7 +64,7 @@ Publish user_created events to Kafka
 
 Handle authentication (phone-number-based login)
 
-Endpoints
+# Endpoints
 
 POST /user
 GET  /user?phoneNo=XXXXXXXXXX
@@ -100,7 +100,7 @@ user_created
 
 transaction_initiated
 
-Responsibilities
+# Responsibilities
 
 Initialize wallet for new users
 
@@ -124,7 +124,7 @@ Send notifications (log / email / SMS – extendable)
 
 Uses a separate consumer group to receive all events independently
 
-Kafka Topics
+# Kafka Topics
 Topic Name	Produced By	Consumed By
 user_created	UserService	WalletService, NotificationService
 transaction_initiated	TransactionService	WalletService, NotificationService
@@ -148,9 +148,9 @@ Password: Password@456
 
 Database
 
-MySQL
+# MySQL
 
-Hibernate ORM
+# Hibernate ORM
 
 Constraints
 
@@ -160,7 +160,7 @@ Phone Number → Unique
 
 Recommendation
 
-Use separate schemas per microservice
+# Use separate schemas per microservice
 
 Kafka Setup (Windows – KRaft Mode)
 Format Kafka Storage (One-time)
@@ -173,7 +173,7 @@ Start Kafka Broker (New Terminal)
 bin\windows\kafka-server-start.bat config\broker.properties
 
 
-Kafka runs on
+# Kafka runs on
 
 localhost:9092
 
@@ -182,7 +182,7 @@ Infrastructure
 
 Kafka (Controller + Broker)
 
-MySQL
+# MySQL
 
 Producer / Hybrid Services
 
@@ -235,7 +235,7 @@ GET /transaction/all
 
 🔐 Requires Basic Auth
 
-Kafka Consumer Verification
+# Kafka Consumer Verification
 
 Successful startup logs
 
@@ -244,7 +244,7 @@ notification-group: partitions assigned: [user_created-0]
 transaction-service: partitions assigned: [transaction_updated-0]
 
 
-This confirms
+# This confirms
 
 Kafka is healthy
 
