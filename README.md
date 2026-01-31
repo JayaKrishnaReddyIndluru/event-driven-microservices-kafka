@@ -1,9 +1,16 @@
-# event-driven-microservices-kafka
+Event-Driven Microservices with Kafka
 
-real-world event-driven microservices system built using Spring Boot, Apache Kafka (KRaft mode), MySQL, and Spring Security.
+A real-world event-driven microservices system built using Spring Boot, Apache Kafka (KRaft mode), MySQL, and Spring Security.
 
-The system demonstrates asynchronous communication, service decoupling, and event choreography using Kafka.
-# Architecture Overview
+This project demonstrates:
+
+Asynchronous communication
+
+Loose coupling between services
+
+Event choreography using Kafka
+
+Architecture Overview
 UserService
    │
    └──▶ Kafka (user_created)
@@ -11,27 +18,28 @@ UserService
              ├──▶ NotificationService
              └──▶ TransactionService
 
+
 TransactionService
    │
    └──▶ Kafka (transaction_initiated)
              ├──▶ WalletService
              └──▶ NotificationService
 
+
 WalletService
    │
    └──▶ Kafka (transaction_updated)
              └──▶ TransactionService
 
-    
- Tech Stack
+Tech Stack
 
 Java 21
 
 Spring Boot
 
-Spring Security (Basic Auth)
+Spring Security (Basic Authentication)
 
-Apache Kafka (KRaft – No Zookeeper)
+Apache Kafka (KRaft Mode – No Zookeeper)
 
 Spring Kafka
 
@@ -42,10 +50,11 @@ Gradle
 Postman
 
 Microservices
- UserService
+UserService
 
 Role: Producer
-Responsibilities:
+
+Responsibilities
 
 Create users
 
@@ -53,7 +62,7 @@ Persist users in MySQL
 
 Publish user_created events to Kafka
 
-Handle authentication (phone number based login)
+Handle authentication (phone-number-based login)
 
 Endpoints
 
@@ -64,17 +73,17 @@ TransactionService
 
 Role: Producer + Consumer
 
-As a Producer
+As Producer
 
-Creates transactions
+Create transactions
 
-Publishes transaction_initiated events
+Publish transaction_initiated events
 
-As a Consumer
+As Consumer
 
-Consumes transaction_updated events
+Consume transaction_updated events
 
-Updates transaction status asynchronously
+Update transaction status asynchronously
 
 Endpoints
 
@@ -85,13 +94,13 @@ WalletService
 
 Role: Kafka Consumer
 
-Consumes:
+Consumes
 
 user_created
 
 transaction_initiated
 
-Responsibilities:
+Responsibilities
 
 Initialize wallet for new users
 
@@ -103,13 +112,13 @@ NotificationService
 
 Role: Kafka Consumer
 
-Consumes:
+Consumes
 
 user_created
 
 transaction_initiated
 
-Responsibilities:
+Responsibilities
 
 Send notifications (log / email / SMS – extendable)
 
@@ -120,36 +129,40 @@ Topic Name	Produced By	Consumed By
 user_created	UserService	WalletService, NotificationService
 transaction_initiated	TransactionService	WalletService, NotificationService
 transaction_updated	WalletService	TransactionService
- Security & Authentication
+Security & Authentication
 
-Spring Security with Basic Auth
+Spring Security with Basic Authentication
 
-Username = phone number
+Username = Phone Number
 
-Password = original plain password
+Password = Original plain password
 
 Passwords stored using BCrypt
 
 Authorization enforced via authorities
 
 Example
+
 Username: 9123456789
 Password: Password@456
 
-🗄️ Database
+Database
 
 MySQL
 
 Hibernate ORM
 
-Unique constraints:
+Constraints
 
-Email
+Email → Unique
 
-Phone number
+Phone Number → Unique
 
-Separate schemas recommended per service
- Kafka Setup (Windows – KRaft Mode)
+Recommendation
+
+Use separate schemas per microservice
+
+Kafka Setup (Windows – KRaft Mode)
 Format Kafka Storage (One-time)
 bin\windows\kafka-storage.bat format --standalone --cluster-id <CLUSTER_ID> --config config\controller.properties
 
@@ -160,11 +173,12 @@ Start Kafka Broker (New Terminal)
 bin\windows\kafka-server-start.bat config\broker.properties
 
 
-Kafka runs on:
+Kafka runs on
 
 localhost:9092
- How to Run the System (IMPORTANT ORDER)
- Infrastructure
+
+How to Run the System (IMPORTANT ORDER)
+Infrastructure
 
 Kafka (Controller + Broker)
 
@@ -176,16 +190,18 @@ UserService
 
 TransactionService
 
- Consumer Services
+Consumer Services
 
 WalletService
 
 NotificationService
 
- Every Kafka consumer must be started explicitly. Kafka does NOT auto-run consumers.
+⚠️ Every Kafka consumer must be started explicitly.
+Kafka does NOT auto-run consumers.
 
- API Testing (Postman)
- Create User
+API Testing (Postman)
+Create User
+
 POST /user
 
 {
@@ -198,6 +214,7 @@ POST /user
 }
 
 Initiate Transaction
+
 POST /transaction
 
 {
@@ -207,24 +224,27 @@ POST /transaction
 }
 
 
- Requires Basic Auth.
+🔐 Requires Basic Auth
 
- Get Transactions (Paginated)
-GET /transaction/all?pageNo=0&limit=10
+Get Transactions (Paginated)
+
+GET /transaction/all
+
+?pageNo=0&limit=10
 
 
- Requires Basic Auth.
+🔐 Requires Basic Auth
 
 Kafka Consumer Verification
 
-Successful startup logs:
+Successful startup logs
 
 wallet-group: partitions assigned: [transaction_initiated-0]
 notification-group: partitions assigned: [user_created-0]
 transaction-service: partitions assigned: [transaction_updated-0]
 
 
-This confirms:
+This confirms
 
 Kafka is healthy
 
